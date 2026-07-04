@@ -1,0 +1,150 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "BMS Smart IR — add a device",
+        "description": "How do you want to control it?",
+        "menu_options": {
+          "broadlink": "Broadlink (local remote, by IP)",
+          "tuya": "Tuya cloud (Z100 / BMS account)"
+        }
+      },
+      "broadlink": {
+        "title": "Broadlink — add a device",
+        "description": "Name the device and enter the Broadlink remote's IP address (e.g. 192.168.1.50).",
+        "data": {
+          "name": "Name",
+          "host": "IP address",
+          "timeout": "Timeout (seconds)"
+        }
+      },
+      "manufacturer": {
+        "title": "Manufacturer",
+        "description": "Pick the air conditioner manufacturer.",
+        "data": {
+          "manufacturer": "Manufacturer"
+        }
+      },
+      "method": {
+        "title": "How to find the code?",
+        "description": "There are {count} codes for {manufacturer}. Choose how to find the right one.",
+        "data": {
+          "method": "Method"
+        }
+      },
+      "autodetect": {
+        "title": "Automatic scan (power sensor)",
+        "description": "Select the power sensor the AC is plugged into. Each of the {count} codes is sent in turn; the one that raises power usage is taken as the match.\n\nIMPORTANT: turn the AC OFF before scanning.",
+        "data": {
+          "power_scan_sensor": "Power sensor (Watts)",
+          "scan_threshold": "Detection threshold (Watts)"
+        }
+      },
+      "model": {
+        "title": "Pick a model / code",
+        "description": "Choose a code to try for {manufacturer}. Available: {remaining}. If several match, test them one by one and keep the one that works.",
+        "data": {
+          "device_code": "Model (device code)"
+        }
+      },
+      "test": {
+        "title": "Test: {model} (#{code})",
+        "description": "{status}\n\nA test signal was sent. Did the AC respond (turn on / beep / change mode)?",
+        "data": {
+          "result": "Result"
+        }
+      },
+      "finish": {
+        "title": "Save and place in a room",
+        "description": "Working code: {model} (#{code}). Choose a room and optionally link sensors.",
+        "data": {
+          "area_id": "Room (area)",
+          "temperature_sensor": "Temperature sensor",
+          "humidity_sensor": "Humidity sensor",
+          "power_sensor": "Power (on/off) sensor"
+        }
+      },
+      "tuya": {
+        "title": "Tuya — IR hub",
+        "description": "Reuses the Tuya cloud account from your BMS Integration. Enter the IR hub device ID.",
+        "data": {
+          "infrared_id": "IR hub device ID"
+        }
+      },
+      "tuya_select": {
+        "title": "Select a remote",
+        "description": "Pick a remote you added in the Smart Life app. Its category is shown next to the name. A test command will be sent next.",
+        "data": {
+          "device_id": "Remote",
+          "name": "Name"
+        }
+      },
+      "tuya_confirm": {
+        "title": "Test",
+        "description": "A test command was sent to your {kind}. Did it respond? If yes, press Submit. If not, you can still finish and check the logs."
+      },
+      "bl_type": {
+        "title": "Device type",
+        "description": "What are you adding over Broadlink?",
+        "data": {
+          "device_type": "Type"
+        }
+      },
+      "tv_manufacturer": {
+        "title": "TV — manufacturer",
+        "description": "Pick the TV brand.",
+        "data": {
+          "manufacturer": "Manufacturer"
+        }
+      },
+      "tv_model": {
+        "title": "TV model / code",
+        "description": "Choose a code to try for {manufacturer}. Available: {remaining}. If several match, test them one by one and keep the one that works.",
+        "data": {
+          "device_code": "Model (device code)"
+        }
+      },
+      "tv_test": {
+        "title": "Test: {model} (#{code})",
+        "description": "{status}\n\nA test signal was sent to the TV (power). Did it respond?",
+        "data": {
+          "result": "Result"
+        }
+      },
+      "tv_finish": {
+        "title": "Save and place in a room",
+        "description": "Working code: {model} (#{code}). Choose a room for the TV.",
+        "data": {
+          "area_id": "Room (area)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not connect. For Broadlink check the IP/network; for Tuya check the BMS cloud account.",
+      "download_failed": "Could not download the code file. Check internet or pick another code.",
+      "scan_no_match": "Scan finished but no code turned the AC on. Try another manufacturer or pick manually.",
+      "no_remotes": "No remotes found under this hub. Check the hub ID, that the remote is added in Smart Life, and that the IR Hub API is enabled."
+    },
+    "abort": {
+      "no_codes": "No code list found.",
+      "no_more_codes": "No more codes to try for this manufacturer.",
+      "no_bms_cloud": "No Tuya cloud credentials found in the BMS Integration. Set it up with a Tuya cloud account first.",
+      "already_configured": "This device is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "BMS Smart IR — change code",
+        "description": "If the code is wrong (e.g. temperature won't go lower), pick another. Check \"Test\" and Submit to send a signal to the real device without saving. When it works, uncheck and Submit to save.\n\n{status}",
+        "data": {
+          "device_code": "Model (device code)",
+          "test_signal": "Test (send signal without saving)",
+          "temperature_sensor": "Temperature sensor",
+          "humidity_sensor": "Humidity sensor",
+          "power_sensor": "Power (on/off) sensor"
+        }
+      }
+    }
+  }
+}

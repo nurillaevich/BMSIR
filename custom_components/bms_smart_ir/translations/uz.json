@@ -1,0 +1,150 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "BMS Smart IR — qurilma qo'shish",
+        "description": "Qaysi usulda boshqarasiz?",
+        "menu_options": {
+          "broadlink": "Broadlink (mahalliy pult, IP orqali)",
+          "tuya": "Tuya bulut (Z100 / BMS akkaunti)"
+        }
+      },
+      "broadlink": {
+        "title": "Broadlink — qurilma qo'shish",
+        "description": "Qurilmaga nom bering va Broadlink universal pultning IP manzilini kiriting (masalan 192.168.1.50).",
+        "data": {
+          "name": "Nomi",
+          "host": "IP manzil",
+          "timeout": "Kutish vaqti (soniya)"
+        }
+      },
+      "manufacturer": {
+        "title": "Ishlab chiqaruvchi",
+        "description": "Konditsioner ishlab chiqaruvchisini tanlang.",
+        "data": {
+          "manufacturer": "Ishlab chiqaruvchi"
+        }
+      },
+      "method": {
+        "title": "Kodni qanday topamiz?",
+        "description": "{manufacturer} uchun {count} ta kod bor. Qaysi kodi to'g'ri kelishini aniqlash usulini tanlang.",
+        "data": {
+          "method": "Usul"
+        }
+      },
+      "autodetect": {
+        "title": "Avtomatik skan (quvvat sensori)",
+        "description": "Konditsioner ulangan quvvat sensorini (smart-plug / power meter) tanlang. Skript {count} ta kodni navbatma-navbat yuboradi va quvvat ko'tarilgan kodni o'zi topadi.\n\nMUHIM: skanni boshlashdan oldin konditsionerni o'z pulti bilan O'CHIRIB qo'ying.",
+        "data": {
+          "power_scan_sensor": "Quvvat sensori (Vatt)",
+          "scan_threshold": "Sezish chegarasi (Vatt)"
+        }
+      },
+      "model": {
+        "title": "Model / kodni tanlang",
+        "description": "{manufacturer} uchun sinab ko'riladigan kodni tanlang. Mavjud kodlar: {remaining} ta. Bir nechta bo'lsa, bittalab sinab, ishlaganini tanlaysiz.",
+        "data": {
+          "device_code": "Model (qurilma kodi)"
+        }
+      },
+      "test": {
+        "title": "Sinov: {model} (#{code})",
+        "description": "{status}\n\nKonditsionerga test signali yuborildi. Konditsioner javob berdimi (yondimi / bip qildimi / rejim o'zgardimi)?",
+        "data": {
+          "result": "Natija"
+        }
+      },
+      "finish": {
+        "title": "Saqlash va xonaga joylashtirish",
+        "description": "Ishlaydigan kod: {model} (#{code}). Qurilmani qaysi xonaga joylashtirishni tanlang va (ixtiyoriy) sensorlarni bog'lang.",
+        "data": {
+          "area_id": "Xona (area)",
+          "temperature_sensor": "Harorat sensori",
+          "humidity_sensor": "Namlik sensori",
+          "power_sensor": "Quvvat (yoniq/o'chiq) sensori"
+        }
+      },
+      "tuya": {
+        "title": "Tuya — IR hub",
+        "description": "BMS integratsiyasidagi Tuya bulut akkauntini qayta ishlatadi. IR hub qurilmasining ID'sini kiriting ('Zigbee IR Remote' qurilmasi).",
+        "data": {
+          "infrared_id": "IR hub qurilma ID'si"
+        }
+      },
+      "tuya_select": {
+        "title": "Pultni tanlang",
+        "description": "Smart Life ilovasida qo'shgan pultlardan birini tanlang. Nomi yonida kategoriyasi ko'rsatilgan (konditsioner, TV, pristavka...). Keyin test signali yuboriladi.",
+        "data": {
+          "device_id": "Pult",
+          "name": "Nom"
+        }
+      },
+      "tuya_confirm": {
+        "title": "Test",
+        "description": "{kind} uchun test signali yuborildi. Javob berdimi? Ha bo'lsa, 'Yuborish'ni bosing. Yo'q bo'lsa ham yakunlashingiz mumkin — keyin loglardan tekshiramiz."
+      },
+      "bl_type": {
+        "title": "Qurilma turi",
+        "description": "Broadlink orqali nima qo'shasiz?",
+        "data": {
+          "device_type": "Turi"
+        }
+      },
+      "tv_manufacturer": {
+        "title": "Televizor — ishlab chiqaruvchi",
+        "description": "Televizor brendini tanlang.",
+        "data": {
+          "manufacturer": "Ishlab chiqaruvchi"
+        }
+      },
+      "tv_model": {
+        "title": "Televizor modeli / kodi",
+        "description": "{manufacturer} uchun sinaladigan kodni tanlang. Mavjud: {remaining} ta. Bir nechta bo'lsa, bittalab sinab, ishlaganini tanlaysiz.",
+        "data": {
+          "device_code": "Model (qurilma kodi)"
+        }
+      },
+      "tv_test": {
+        "title": "Sinov: {model} (#{code})",
+        "description": "{status}\n\nTelevizorga test signali yuborildi (yoq/o'chir). Televizor javob berdimi?",
+        "data": {
+          "result": "Natija"
+        }
+      },
+      "tv_finish": {
+        "title": "Saqlash va xonaga joylashtirish",
+        "description": "Ishlaydigan kod: {model} (#{code}). Televizorni qaysi xonaga joylashtirishni tanlang.",
+        "data": {
+          "area_id": "Xona (area)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Ulanib bo'lmadi. Broadlink uchun IP/tarmoqni, Tuya uchun BMS bulut akkauntini tekshiring.",
+      "download_failed": "Kod faylini yuklab bo'lmadi. Internet aloqasini tekshiring yoki boshqa kodni tanlang.",
+      "scan_no_match": "Skan tugadi, lekin hech qaysi kod konditsionerni yoqmadi. Boshqa ishlab chiqaruvchini sinang yoki qo'lda tanlang.",
+      "no_remotes": "Bu hub ostida pult topilmadi. Hub ID'sini, pult Smart Life ilovasida qo'shilganini va Tuya loyihangizda IR API yoqilganini tekshiring."
+    },
+    "abort": {
+      "no_codes": "Kodlar ro'yxati topilmadi.",
+      "no_more_codes": "Bu ishlab chiqaruvchi uchun sinaladigan boshqa kod qolmadi.",
+      "no_bms_cloud": "BMS integratsiyasida Tuya bulut kalitlari topilmadi. Avval BMS integratsiyasini Tuya bulut akkaunti bilan sozlang.",
+      "already_configured": "Bu qurilma allaqachon sozlangan."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "BMS Smart IR — kodni o'zgartirish",
+        "description": "Kod noto'g'ri bo'lsa (masalan harorat pastga tushmasa), boshqa kodni tanlang. \"Sinab ko'rish\" belgisini qo'yib Submit bossangiz — saqlanmasdan real qurilmaga signal yuboriladi. To'g'ri kodni topsangiz, belgini olib Submit bosing (saqlanadi).\n\n{status}",
+        "data": {
+          "device_code": "Model (qurilma kodi)",
+          "test_signal": "Sinab ko'rish (saqlamasdan signal yuborish)",
+          "temperature_sensor": "Harorat sensori",
+          "humidity_sensor": "Namlik sensori",
+          "power_sensor": "Quvvat (yoniq/o'chiq) sensori"
+        }
+      }
+    }
+  }
+}
