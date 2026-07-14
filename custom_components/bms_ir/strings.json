@@ -1,0 +1,97 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "BMS IR — qurilma qo'shish",
+        "description": "Qurilmaga nom bering va Broadlink universal pultning IP manzilini kiriting (masalan 192.168.1.50).",
+        "data": {
+          "name": "Nomi",
+          "host": "IP manzil",
+          "timeout": "Kutish vaqti (soniya)"
+        }
+      },
+      "manufacturer": {
+        "title": "Ishlab chiqaruvchi",
+        "description": "Konditsioner ishlab chiqaruvchisini tanlang.",
+        "data": {
+          "manufacturer": "Ishlab chiqaruvchi"
+        }
+      },
+      "method": {
+        "title": "Kodni qanday topamiz?",
+        "description": "{manufacturer} uchun {count} ta kod bor. Qaysi kodi to'g'ri kelishini aniqlash usulini tanlang.",
+        "data": {
+          "method": "Usul"
+        }
+      },
+      "autodetect": {
+        "title": "Avtomatik skan (quvvat sensori)",
+        "description": "Konditsioner ulangan quvvat sensorini (smart-plug / power meter) tanlang. Skript {count} ta kodni navbatma-navbat yuboradi va quvvat ko'tarilgan kodni o'zi topadi.\n\nMUHIM: skanni boshlashdan oldin konditsionerni o'z pulti bilan O'CHIRIB qo'ying. Skan bir necha daqiqa davom etishi mumkin — kuting.",
+        "data": {
+          "power_scan_sensor": "Quvvat sensori (Vatt)",
+          "scan_threshold": "Sezish chegarasi (Vatt)"
+        }
+      },
+      "model": {
+        "title": "Model / kodni tanlang",
+        "description": "{manufacturer} uchun sinab ko'riladigan kodni tanlang. Mavjud kodlar: {remaining} ta. Kod fayli avtomatik yuklab olinadi. Bir nechta bo'lsa, bittalab sinab, ishlaganini tanlaysiz.",
+        "data": {
+          "device_code": "Model (qurilma kodi)"
+        }
+      },
+      "test": {
+        "title": "Sinov: {model} (#{code})",
+        "description": "{status}\n\nKonditsionerga test signali yuborildi. Konditsioner javob berdimi (yondimi / bip qildimi / rejim o'zgardimi)? Javobni tanlang.",
+        "data": {
+          "result": "Natija"
+        }
+      },
+      "finish": {
+        "title": "Saqlash va xonaga joylashtirish",
+        "description": "Ishlaydigan kod: {model} (#{code}). Qurilmani qaysi xonaga joylashtirishni tanlang va (ixtiyoriy) sensorlarni bog'lang.",
+        "data": {
+          "area_id": "Xona (area)",
+          "temperature_sensor": "Harorat sensori",
+          "humidity_sensor": "Namlik sensori",
+          "power_sensor": "Quvvat (yoniq/o'chiq) sensori"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Bu IP manzilga ulanib bo'lmadi. Broadlink yoqilganini, bir tarmoqda ekanini va IP to'g'riligini tekshiring.",
+      "download_failed": "Kod faylini yuklab bo'lmadi. Internet aloqasini tekshiring yoki boshqa kodni tanlang.",
+      "scan_no_match": "Skan tugadi, lekin hech qaysi kod konditsionerni yoqmadi. Boshqa ishlab chiqaruvchini sinang yoki qo'lda tanlang."
+    },
+    "abort": {
+      "no_codes": "Kodlar ro'yxati topilmadi.",
+      "no_more_codes": "Bu ishlab chiqaruvchi uchun sinaladigan boshqa kod qolmadi. Boshqa ishlab chiqaruvchini tanlang.",
+      "already_configured": "Bu qurilma allaqachon sozlangan."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "BMS IR — sensorlar",
+        "description": "Ushbu qurilma uchun bog'langan sensorlarni o'zgartiring.",
+        "data": {
+          "temperature_sensor": "Harorat sensori",
+          "humidity_sensor": "Namlik sensori",
+          "power_sensor": "Quvvat (yoniq/o'chiq) sensori"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "temperature": {
+        "name": "Harorat"
+      },
+      "humidity": {
+        "name": "Namlik"
+      },
+      "ir_emitter": {
+        "name": "IR emitter"
+      }
+    }
+  }
+}
