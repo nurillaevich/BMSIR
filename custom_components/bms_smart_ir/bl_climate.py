@@ -68,12 +68,8 @@ HVAC_KEY_MAP = {
 OFF_STATES = (STATE_OFF, STATE_UNKNOWN, STATE_UNAVAILABLE, "off", None)
 
 
-async def async_setup_entry(
-    hass: HomeAssistant,
-    entry: ConfigEntry,
-    async_add_entities: AddEntitiesCallback,
-) -> None:
-    """Set up the climate entity from a config entry."""
+async def async_build_climate(hass: HomeAssistant, entry: ConfigEntry):
+    """Build the Broadlink SmartIR climate entity (or None on failure)."""
     config = {**entry.data, **entry.options}
     integration_dir = os.path.dirname(__file__)
     device_code = config[CONF_DEVICE_CODE]
@@ -82,27 +78,13 @@ async def async_setup_entry(
         hass, integration_dir, DEVICE_TYPE_CLIMATE, device_code
     )
     if not device_data:
-        _LOGGER.error(
-            "Could not load device code %s — entity not created", device_code
-        )
-        return
+        _LOGGER.error("Could not load device code %s — entity not created", device_code)
+        return None
 
-    store = hass.data[DOMAIN][entry.entry_id]
-    async_add_entities(
-        [
-            IRClimate(
-                hass,
-                entry,
-                config,
-                device_data,
-                store["coordinator"],
-                store["controller"],
-            )
-        ]
-    )
+    return BroadlinkClimate(hass, entry, config, device_data)
 
 
-class IRClimate(ClimateEntity, RestoreEntity):
+class BroadlinkClimate(ClimateEntity, RestoreEntity):
     """An IR-controlled air conditioner."""
 
     _attr_has_entity_name = False
@@ -114,15 +96,11 @@ class IRClimate(ClimateEntity, RestoreEntity):
         entry: ConfigEntry,
         config: dict[str, Any],
         device_data: dict[str, Any],
-        coordinator=None,
-        controller=None,
     ) -> None:
         self.hass = hass
         self._entry = entry
         self._config = config
         self._data = device_data
-        self._coordinator = coordinator
-        self._shared_controller = controller
 
         self._attr_name = config[CONF_NAME]
         self._attr_unique_id = entry.entry_id
@@ -170,14 +148,10 @@ class IRClimate(ClimateEntity, RestoreEntity):
         self._power_sensor = config.get(CONF_POWER_SENSOR)
 
         # ----- Controller ---------------------------------------------------
-        # Reuse the entry's shared controller when available, so every
-        # transmission (climate + remote) goes through one connection and the
-        # "IR emitter" sensor sees all of them.
-        self._encoding = device_data.get("commandsEncoding", "Base64")
-        self._controller = self._shared_controller or BroadlinkIRController(
+        self._controller = BroadlinkIRController(
             hass,
             config[CONF_HOST],
-            self._encoding,
+            device_data.get("commandsEncoding", "Base64"),
             config.get(CONF_TIMEOUT, DEFAULT_TIMEOUT),
         )
 
@@ -232,27 +206,6 @@ class IRClimate(ClimateEntity, RestoreEntity):
                     self.hass, self._power_sensor, self._async_power_changed
                 )
             )
-
-        # If no external sensor was linked, use the Broadlink device's own
-        # built-in temperature / humidity readings instead.
-        if self._coordinator is not None and not (
-            self._temperature_sensor and self._humidity_sensor
-        ):
-            self.async_on_remove(
-                self._coordinator.async_add_listener(self._async_hw_sensors_updated)
-            )
-            self._async_hw_sensors_updated(write_state=False)
-
-    @callback
-    def _async_hw_sensors_updated(self, write_state: bool = True) -> None:
-        """Take temperature / humidity from the Broadlink hardware."""
-        data = (self._coordinator.data if self._coordinator else None) or {}
-        if not self._temperature_sensor and (temp := data.get("temperature")) is not None:
-            self._attr_current_temperature = float(temp)
-        if not self._humidity_sensor and (hum := data.get("humidity")) is not None:
-            self._attr_current_humidity = float(hum)
-        if write_state:
-            self.async_write_ha_state()
 
     # ----------------------------------------------------------------------
     # Sensor callbacks
@@ -338,9 +291,6 @@ class IRClimate(ClimateEntity, RestoreEntity):
             )
         else:
             try:
-                # The shared controller is also used by the remote entity, so
-                # always set our code file's encoding before transmitting.
-                self._controller.encoding = self._encoding
                 await self._controller.send(command)
             except Exception as err:  # noqa: BLE001 - surface any transmit error
                 _LOGGER.error("%s: failed to send IR command: %s", self._attr_name, err)

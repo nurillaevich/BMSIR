@@ -171,7 +171,7 @@ async def async_ensure_code_file(
         return bundled
 
     # 2) writable cache
-    cache_dir = hass.config.path("bms_ir_codes", device_type)
+    cache_dir = hass.config.path("bms_smart_ir_codes", device_type)
     cache_file = os.path.join(cache_dir, f"{code}.json")
     if await hass.async_add_executor_job(os.path.exists, cache_file):
         try:
